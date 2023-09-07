@@ -5,7 +5,7 @@ import redis
 
 app = Flask(__name__)
 cache = redis.StrictRedis( host='redis', port=6379, db=0 )
-salt = "666_777_888"
+salt = "666_777_888_999"
 default_name = 'John Doe'
 
 @app.route('/', methods=['GET', 'POST'])
