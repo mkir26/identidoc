@@ -11,4 +11,4 @@ RUN apt-get update && apt-get install -y docker-ce-cli docker-compose-plugin \
     && apt-get clean autoclean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 USER jenkins
-RUN jenkins-plugin-cli --plugins "scm-api git-client git greenballs"
+RUN jenkins-plugin-cli --plugins "scm-api git-client git"
