@@ -1,2 +1,2 @@
 # identidoc
-study docker.
+study docker and docker compose
