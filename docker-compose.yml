@@ -1,5 +1,6 @@
 services:
-  image: alex1255/identidock:
+  identidock:  
+    image: alex1255/identidock:
     ports:
       - "5000:5000"
       - "9090:9090"
@@ -10,7 +11,7 @@ services:
       - redis
 
   dnmonster:
-    image: amouat/dnmonster
+      image: amouat/dnmonster
 
   redis:
-    image: redis
+      image: redis
