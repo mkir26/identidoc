@@ -1,10 +1,10 @@
 services:
-  identidock:
-    build: .
-    expose:
-      - "9090"
+  image: alex1255/identidock:
+    ports:
+      - "5000:5000"
+      - "9090:9090"
     environment:
-      ENV: PROD
+      ENV: DEV
     links:
       - dnmonster
       - redis
