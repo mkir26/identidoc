@@ -1,6 +1,6 @@
 services:
   proxy:
-    image: identiproxy
+    image: proxy
     links:
       - identidock
     ports:
