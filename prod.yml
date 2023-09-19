@@ -1,0 +1,18 @@
+services:
+  proxy:
+    image: identiproxy
+    links:
+      - identidock
+    ports:
+      - "80:80"
+  identidock:
+    image: alex1255/identidock:newest
+    links:
+      - dnmonster
+      - redis
+    enviroment:
+      ENV: PROD
+  dnmonster:
+    image: amouat/dnmonster
+  redis:
+    image: redis
