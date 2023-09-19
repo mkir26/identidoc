@@ -1,6 +1,6 @@
 services:
   identidock:  
-    image: alex1255/identidock:
+    image: alex1255/identidock
     ports:
       - "5000:5000"
       - "9090:9090"
