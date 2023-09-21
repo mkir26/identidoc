@@ -29,10 +29,9 @@ services:
       - logstash
     command: logstash://logstash:5000
   logstash:
-    image: logstash
+    image: logstash:8.10.1
     volumes:
       - ./logstash.conf:/etc/logstash.conf
     environment:
       LOGSPOUT: ignore
     command: -f ./logstash.conf
-    
