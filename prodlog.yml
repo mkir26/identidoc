@@ -29,6 +29,7 @@ services:
       - logstash
     environment:
       ROUTE_URIS: logstash://logstash:5000
+      RETRY_STARTUP: "1"
     #command: logstash://logstash:5000
   logstash:
     image: logstash:8.10.1
