@@ -27,6 +27,8 @@ services:
     environment:
       LOGSPOUT: ignore
       LOG_LEVEL: fatal
+    links:
+      - elasticsearch
     command: -f /etc/logstash/conf.d/logstash.conf
   
   logspout:
@@ -41,3 +43,16 @@ services:
       RETRY_STARTUP: "true"
     depends_on:
       - logstash
+  elasticsearch:
+    image: elasticsearch:8.10.2
+    environment:
+      LOGSPOUT: ignore
+  kibana:
+    image: kibana:8.10.2
+    environment:
+      LOGSPOUT: ignore
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    links:
+      - elasticsearch
+    ports:
+      - "5601:5601"
