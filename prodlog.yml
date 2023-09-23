@@ -28,7 +28,7 @@ services:
     links:
       - logstash
     environment:
-      ROUTE_URIS=logstash+tcp://logstash:5000
+      ROUTE_URIS: logstash+tcp://logstash:5000
     #command: logstash://logstash:5000
   logstash:
     image: logstash:8.10.1
