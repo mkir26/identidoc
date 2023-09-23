@@ -26,10 +26,12 @@ services:
       - /home/unlo/identidock/logstash.conf:/etc/logstash/conf.d/logstash.conf
     environment:
       LOGSPOUT: ignore
-      LOG_LEVEL: error
+      LOG_LEVEL: info
     links:
       - elasticsearch
     command: -f /etc/logstash/conf.d/logstash.conf
+    depends_on:
+      - elasticsearch
   
   logspout:
     image: amouat/logspout-logstash
@@ -43,6 +45,7 @@ services:
       RETRY_STARTUP: "true"
     depends_on:
       - logstash
+  
   elasticsearch:
     image: elasticsearch:8.10.2
     environment:
