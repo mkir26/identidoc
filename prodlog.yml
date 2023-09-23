@@ -35,6 +35,5 @@ services:
     links:
       - logstash
     environment:
-      ROUTE_URIS: logstash + tcp://logstash:5000
-      RETRY_STARTUP: "1"
-      INCLUDE_CONTAINERS: identidock-proxy-1
+      ROUTE_URIS: logstash://logstash:5000
+      RETRY_STARTUP: "true"
