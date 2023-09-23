@@ -25,13 +25,3 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8000:80"
-    links:
-      - logstash
-    command: logstash://logstash:5000
-  logstash:
-    image: logstash:8.10.1
-    volumes:
-      - ./logstash.conf:/usr/share/logstash/logstash.conf
-    environment:
-      LOGSPOUT: ignore
-    command: -f ./logstash.conf
