@@ -26,6 +26,7 @@ services:
       - /home/unlo/identidock/logstash.conf:/etc/logstash/conf.d/logstash.conf
     environment:
       LOGSPOUT: ignore
+      LOG_LEVEL: fatal
     command: -f /etc/logstash/conf.d/logstash.conf
   
   logspout:
