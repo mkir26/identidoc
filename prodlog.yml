@@ -23,17 +23,19 @@ services:
     image: amouat/logspout-logstash
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "8000:80"
+    #ports:
+    #  - "8000:80"
     links:
       - logstash
-    command: logstash://logstash:5000
+    environment:
+      ROUTE_URIS=logstash+tcp://logstash:5000
+    #command: logstash://logstash:5000
   logstash:
     image: logstash:8.10.1
     volumes:
       - /home/unlo/identidock/logstash.conf:/etc/logstash/conf.d/logstash.conf
-    ports:
-      - "5000:5000"
+    #ports:
+    #  - "5000:5000"
     environment:
       LOGSPOUT: ignore
     command: -f /etc/logstash/conf.d/logstash.conf
