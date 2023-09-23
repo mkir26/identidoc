@@ -26,7 +26,6 @@ services:
       - /home/unlo/identidock/logstash.conf:/etc/logstash/conf.d/logstash.conf
     environment:
       LOGSPOUT: ignore
-      #LOG_LEVEL: fatal
     command: -f /etc/logstash/conf.d/logstash.conf
   
   logspout:
@@ -38,7 +37,3 @@ services:
     environment:
       ROUTE_URIS: logstash://logstash:5000
       RETRY_STARTUP: "1"
-
-
-
-
