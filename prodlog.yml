@@ -31,6 +31,7 @@ services:
   
   logspout:
     image: amouat/logspout-logstash
+    restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     links:
@@ -38,3 +39,5 @@ services:
     environment:
       ROUTE_URIS: logstash://logstash:5000
       RETRY_STARTUP: "true"
+    depends_on:
+      - logstash
