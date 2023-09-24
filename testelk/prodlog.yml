@@ -2,14 +2,12 @@ services:
   logstash:
     image: logstash:8.10.2
     volumes:
-      - /home/unlo/identidock/testelk/logstash.conf:/etc/logstash/conf.d/logstash.conf
-      - /etc
+      - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - /usr
     environment:
-      LOG_LEVEL: warn
+      LOG_LEVEL: error
     links:
       - elasticsearch
-    command: -f /etc/logstash/conf.d/logstash.conf
     depends_on:
       - elasticsearch
     
@@ -19,7 +17,7 @@ services:
       discovery.type: single-node
       ELASTIC_PASSWORD: "12345"
     volumes:
-      - /certselk:/usr/share/elasticsearch/config/certs
+      - /usr/share/elasticsearch/config/certs
   
   kibana:
     image: kibana:8.10.2
