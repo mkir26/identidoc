@@ -3,6 +3,8 @@ services:
     image: logstash:8.10.2
     volumes:
       - /home/unlo/identidock/testelk/logstash.conf:/etc/logstash/conf.d/logstash.conf
+      - /etc
+      - /usr
     environment:
       LOG_LEVEL: warn
     links:
@@ -10,9 +12,6 @@ services:
     command: -f /etc/logstash/conf.d/logstash.conf
     depends_on:
       - elasticsearch
-    volumes:
-      - /etc
-      - /usr
     
   elasticsearch:
     image: elasticsearch:8.10.2
