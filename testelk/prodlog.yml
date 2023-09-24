@@ -3,7 +3,8 @@ services:
     image: logstash:8.10.2
     volumes:
       - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - elasticsearch:/etc/logstash/certs
+    volumes_from:
+      - elasticsearch:ro
     environment:
       LOG_LEVEL: error
     links:
