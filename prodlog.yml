@@ -54,7 +54,7 @@ services:
     image: kibana:8.10.2
     environment:
       LOGSPOUT: ignore
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: https://elasticsearch:9200
     links:
       - elasticsearch
     ports:
