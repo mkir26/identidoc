@@ -19,7 +19,7 @@ services:
       discovery.type: single-node
       ELASTIC_PASSWORD: "12345"
     volumes:
-      - certselk:/usr/share/elasticsearch/config/certs
+      - /certselk:/usr/share/elasticsearch/config/certs
   
   kibana:
     image: kibana:8.10.2
