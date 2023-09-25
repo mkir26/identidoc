@@ -17,6 +17,7 @@ services:
     environment:
       discovery.type: single-node
       ELASTIC_PASSWORD: "12345"
+      LOG_LEVEL: error
     volumes:
       - ./certs/http_ca.crt:/etc/elasticsearch/certs/http_ca.crt
   
