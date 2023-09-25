@@ -3,7 +3,6 @@ services:
     image: logstash:8.10.2
     volumes:
       - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./certs:/etc/logstash/certs:ro
     environment:
       LOG_LEVEL: error
       CONFIG_RELOAD_AUTOMATIC: true
@@ -18,8 +17,7 @@ services:
       discovery.type: single-node
       ELASTIC_PASSWORD: "12345"
       LOG_LEVEL: error
-    volumes:
-      - ./certs/http_ca.crt:/etc/elasticsearch/certs/http_ca.crt
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
   
   kibana:
     image: kibana:8.10.2
