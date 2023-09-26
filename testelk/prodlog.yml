@@ -19,8 +19,8 @@ services:
       LOG_LEVEL: error
       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     volumes:
-      - certs:/etc/elasticsearch/certs
-  
+      - certs:/usr/share/elasticsearch/config/certs
+
   kibana:
     image: kibana:8.10.2
     environment:
