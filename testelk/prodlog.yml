@@ -14,7 +14,6 @@ services:
   elasticsearch:
     image: elasticsearch:8.10.2
     environment:
-      discovery.type: single-node
       ELASTIC_PASSWORD: "12345"
       LOG_LEVEL: error
       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
