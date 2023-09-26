@@ -13,7 +13,6 @@ services:
     
   elasticsearch:
     image: elasticsearch:8.10.2
-    environment:
     volumes:
       - etc:/etc:ro
       - usr:/usr/share/elasticsearch:ro
