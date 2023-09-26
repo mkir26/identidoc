@@ -13,6 +13,8 @@ services:
     
   elasticsearch:
     image: elasticsearch:8.10.2
+    environment:
+      xpack.license.self_generated.type=basic
     volumes:
       - usr:/usr:ro
 
