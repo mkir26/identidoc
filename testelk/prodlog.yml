@@ -14,8 +14,7 @@ services:
   elasticsearch:
     image: elasticsearch:8.10.2
     volumes:
-      - etc:/etc:ro
-      - usr:/usr/share/elasticsearch:ro
+      - root:/:ro
 
   kibana:
     image: kibana:8.10.2
@@ -29,5 +28,4 @@ services:
       - elasticsearch
 
 volumes:
-  etc:
-  usr:
+  root:
