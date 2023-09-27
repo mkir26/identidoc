@@ -22,7 +22,7 @@ services:
       DISCOVERY_TYPE: single-node
       XPACK_SECURITY_HTTP_SSL_ENABLED: true
     volumes:
-      - certs:/usr/share/elasticsearch/config:ro
+      - certs:/usr/share/elasticsearch/config
     ports:
       - "9200:9200"
 
