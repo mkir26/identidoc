@@ -1,15 +1,16 @@
 services:
-#  logstash:
-#    image: logstash:8.10.2
-#    volumes:
-#      - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-#    environment:
-#      LOG_LEVEL: error
-#      CONFIG_RELOAD_AUTOMATIC: true
-#    links:
-#      - elasticsearch
-#    depends_on:
-#      - elasticsearch
+  logstash:
+    image: logstash:8.10.2
+    volumes:
+      - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - certs:/etc/logstash/certs
+    environment:
+      LOG_LEVEL: error
+      CONFIG_RELOAD_AUTOMATIC: true
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
     
   elasticsearch:
     image: elasticsearch:8.10.2
@@ -22,7 +23,7 @@ services:
       DISCOVERY_TYPE: single-node
       XPACK_SECURITY_HTTP_SSL_ENABLED: true
     volumes:
-      - certs:/usr/share/elasticsearch/config
+      - certs:/usr/share/elasticsearch/config/certs
     ports:
       - "9200:9200"
 
