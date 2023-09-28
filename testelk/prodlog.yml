@@ -99,16 +99,33 @@ services:
       timeout: 10s
       retries: 120
 
-#  kibana:
-#    image: kibana:8.10.2
-#    environment:
-#      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-#    links:
-#      - elasticsearch
-#    ports:
-#      - "5601:5601"
-#    depends_on:
-#      - elasticsearch
+  kibana:
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    image: kibana:8.10.2
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=https://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=qazwsxedc
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+      - XPACK_SECURITY_ENCRYPTIONKEY=c34d38b3a14956121ff2170e5030b471551370178f43e5626eec58b04a30fae2
+      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=c34d38b3a14956121ff2170e5030b471551370178f43e5626eec58b04a30fae2
+      - XPACK_REPORTING_ENCRYPTIONKEY=c34d38b3a14956121ff2170e5030b471551370178f43e5626eec58b04a30fae2
+    volumes:
+      - certs:/usr/share/kibana/config/certs
+    ports:
+      - "5601:5601"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
 
 volumes:
   certs:
