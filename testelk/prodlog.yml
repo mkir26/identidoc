@@ -66,22 +66,21 @@ services:
         condition: service_healthy
     image: elasticsearch:8.10.2
     environment:
-      NODE_NAME: elasticsearch
-      XPACK.LICENSE.SELF__GENERATED_TYPE: basic
-      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
-      BOOTSTRAP_MEMORY__LOCK: true
-      ELASTIC_PASSWORD: qazwsxedc
-      XPACK_SECURITY_ENABLED: true
-      DISCOVERY_TYPE: single-node
-      XPACK_SECURITY_HTTP_SSL_ENABLED: true
-      XPACK_SECURITY_HTTP_SSL_KEY: certs/elasticsearch/elasticsearch.key
-      XPACK_SECURITY_HTTP_SSL_CERTIFICATE: certs/elasticsearch/elasticsearch.crt
-      XPACK_SECURITY_HTTP_SSL_CERTIFICATE__AUTHORITIES: certs/ca/ca.crt
-      XPACK_SECURITY_TRANSPORT_SSL_ENABLED: true
-      XPACK_SECURITY_TRANSPORT_SSL_KEY: certs/elasticsearch/elasticsearch.key
-      XPACK_SECURITY_TRANSPORT_SSL_CERTIFICATE: certs/elasticsearch/elasticsearch.crt
-      XPACK_SECURITY_TRANSPORT_SSL_CERTIFICATE__AUTHORITIES: certs/ca/ca.crt
-      XPACK_SECURITY_TRANSPORT_SSL_VERIFICATION__MODE: certificate
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=qazwsxedc
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/es01/es01.key
+      - xpack.security.http.ssl.certificate=certs/es01/es01.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/es01/es01.key
+      - xpack.security.transport.ssl.certificate=certs/es01/es01.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=basic
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
     ports:
