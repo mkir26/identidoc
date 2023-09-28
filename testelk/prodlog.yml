@@ -42,7 +42,7 @@ services:
         echo "certs done!";
       '
     healthcheck:
-      test: ["CMD-SHELL", "[ -f config/certs/elasticsearch/elasticsearch.crt]"]
+      test: ["CMD-SHELL", "[ -f config/certs/elasticsearch/elasticsearch.crt ]"]
       interval: 1s
       timeout: 5s
       retries: 120
@@ -114,7 +114,7 @@ services:
 volumes:
   certs:
     driver: local
-    
+
 networks:
   default:
     name: elastic
