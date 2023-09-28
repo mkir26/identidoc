@@ -47,19 +47,23 @@ services:
       timeout: 5s
       retries: 120
 
-#  logstash:
-#    image: logstash:8.10.2
-#    volumes:
-#      - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-#      - certs:/etc/logstash/certs
-#    environment:
-#      LOG_LEVEL: error
-#      CONFIG_RELOAD_AUTOMATIC: true
-#    links:
-#      - elasticsearch
-#    depends_on:
-#      - elasticsearch
-    
+  logstash:
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    image: logstash:8.10.2
+    user: root
+    volumes:
+      - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - certs:/usr/share/logstash/certs
+    environment:
+      - xpack.monitoring.enabled=false
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=qazwsxedc
+      - ELASTIC_HOSTS=https://elasticsearch:9200
+
   elasticsearch:
     depends_on:
       setup:
