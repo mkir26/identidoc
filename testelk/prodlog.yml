@@ -67,7 +67,6 @@ services:
     image: elasticsearch:8.10.2
     environment:
       - node.name=elasticsearch
-      - log.level=error
       - discovery.type=single-node
       - ELASTIC_PASSWORD=qazwsxedc
       - bootstrap.memory_lock=true
