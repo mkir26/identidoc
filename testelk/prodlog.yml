@@ -59,6 +59,7 @@ services:
       - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
       - certs:/usr/share/logstash/certs
     environment:
+      - LOGSPOUT=ignore
       - xpack.monitoring.enabled=false
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=qazwsxedc
@@ -70,6 +71,7 @@ services:
         condition: service_healthy
     image: elasticsearch:8.10.2
     environment:
+      - LOGSPOUT=ignore
       - node.name=elasticsearch
       - discovery.type=single-node
       - ELASTIC_PASSWORD=qazwsxedc
@@ -109,6 +111,7 @@ services:
         condition: service_healthy
     image: kibana:8.10.2
     environment:
+      - LOGSPOUT=ignore
       - SERVERNAME=kibana
       - ELASTICSEARCH_HOSTS=https://elasticsearch:9200
       - ELASTICSEARCH_USERNAME=kibana_system
@@ -130,6 +133,33 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+
+  logspout:
+    depends_on:
+      logstash:
+    image: amouat/logspout-logstash
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      ROUTE_URIS: logstash://logstash:5000
+      RETRY_STARTUP: "true"
+
+  proxy:
+    image: alex1255/proxy:1.0
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=10.0.1.6
+      - NGINX_PROXY=http://identidock:9090
+  identidock:
+    image: alex1255/identidock:1.0
+    environment:
+      - ENV=PROD
+  dnmonster:
+    image: amouat/dnmonster
+  redis:
+    image: redis
 
 volumes:
   certs:
