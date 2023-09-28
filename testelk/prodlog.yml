@@ -2,7 +2,7 @@ services:
   setup:
     image: elasticsearch:8.10.2
     volumes:
-      - certs:/usr/share/elastichsearch/config/certs
+      - certs:/usr/share/elasticsearch/config/certs
     user: "0"
     command: >
       bash -c '
