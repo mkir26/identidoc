@@ -34,8 +34,13 @@ services:
         find . -type f -exec chmod 640 \{\} \;;
         until curl -s --cacert config/certs/ca/ca.crt https://elasticsearch:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://elasticsearch:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+        echo "certs done!";
       '
-
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f config/certs/elasticsearch/elasticsearch.crt]"]
+      interval: 1s
+      timeout: 5s
+      retries: 120
 
 #  logstash:
 #    image: logstash:8.10.2
@@ -50,20 +55,45 @@ services:
 #    depends_on:
 #      - elasticsearch
     
-#  elasticsearch:
-#    image: elasticsearch:8.10.2
-#    environment:
-#      XPACK.LICENSE.SELF__GENERATED_TYPE: basic
-#      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
-#      ELASTIC_PASSWORD: "12345"
-#      XPACK_SECURITY_ENABLED: true
-#      XPACK_SECURITY.AUTOCONFIGURATION.ENABLED: true
-#      DISCOVERY_TYPE: single-node
-#      XPACK_SECURITY_HTTP_SSL_ENABLED: true
-#    volumes:
-#      - certs:/usr/share/elasticsearch/config/certs
-#    ports:
-#      - "9200:9200"
+  elasticsearch:
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: elasticsearch:8.10.2
+    environment:
+      NODE_NAME: elasticsearch
+      XPACK.LICENSE.SELF__GENERATED_TYPE: basic
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+      BOOTSTRAP_MEMORY__LOCK: true
+      ELASTIC_PASSWORD: qazwsxedc
+      XPACK_SECURITY_ENABLED: true
+      DISCOVERY_TYPE: single-node
+      XPACK_SECURITY_HTTP_SSL_ENABLED: true
+      XPACK_SECURITY_HTTP_SSL_KEY: certs/elasticsearch/elasticsearch.key
+      XPACK_SECURITY_HTTP_SSL_CERTIFICATE: certs/elasticsearch/elasticsearch.crt
+      XPACK_SECURITY_HTTP_SSL_CERTIFICATE__AUTHORITIES: certs/ca/ca.crt
+      XPACK_SECURITY_TRANSPORT_SSL_ENABLED: true
+      XPACK_SECURITY_TRANSPORT_SSL_KEY: certs/elasticsearch/elasticsearch.key
+      XPACK_SECURITY_TRANSPORT_SSL_CERTIFICATE: certs/elasticsearch/elasticsearch.crt
+      XPACK_SECURITY_TRANSPORT_SSL_CERTIFICATE__AUTHORITIES: certs/ca/ca.crt
+      XPACK_SECURITY_TRANSPORT_SSL_VERIFICATION__MODE: certificate
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+    ports:
+      - "9200:9200"
+    ulimimts:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
 
 #  kibana:
 #    image: kibana:8.10.2
