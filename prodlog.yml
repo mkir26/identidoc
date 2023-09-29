@@ -64,7 +64,7 @@ services:
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=qazwsxedc
       - ELASTIC_HOSTS=https://elasticsearch:9200
-    links:
+    ports:
       - "127.0.0.1:5544:5544"
     healthcheck:
       test: ["CMD-SHELL", "[ -f /usr/share/logstash/pipeline/logstash.conf ]"]
