@@ -56,7 +56,7 @@ services:
     image: logstash:8.10.2
     user: root
     volumes:
-      - /home/unlo/identidock/testelk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - /home/unlo/identidock/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
       - certs:/usr/share/logstash/certs
     environment:
       - LOGSPOUT=ignore
