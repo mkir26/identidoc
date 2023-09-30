@@ -4,9 +4,9 @@ global:
     evaluation_interval: 1m
 
 scrape_configs:
-    -   job._name: http
+    -   job_name: http
         scheme: http
-        target_groups:
+        static_configs:
         -   targets:
             -   'cadvisor:8080'
             -   'localhost:9090'
